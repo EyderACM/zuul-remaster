@@ -1,13 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author rafa_
- */
 public class CommandWords {
 
     private static final String[] validCommands = {
@@ -15,7 +5,7 @@ public class CommandWords {
     };
 
     public CommandWords() {
-        // nothing to do at the moment...
+        // TODO: Complete section
     }
 
     public boolean isCommand(String aString) {
