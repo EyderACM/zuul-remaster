@@ -1,3 +1,6 @@
+
+import java.util.HashMap;
+
 public class Game {
 
     private Parser parser;
@@ -16,24 +19,40 @@ public class Game {
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
+        
+        HashMap<RoomDirections, Room> outsideExits = new HashMap<>();       
+        outsideExits.put(RoomDirections.EAST, theatre);
+        outsideExits.put(RoomDirections.SOUTH, lab);
+        outsideExits.put(RoomDirections.WEST, pub);
+        outside.setRoomExits(outsideExits);
+        
+        HashMap<RoomDirections, Room> theatreExits = new HashMap<>();        
+        theatreExits.put(RoomDirections.WEST, outside);
+        theatre.setRoomExits(theatreExits);
+        
+        HashMap<RoomDirections, Room> pubExits = new HashMap<>();        
+        pubExits.put(RoomDirections.EAST, outside);        
+        pub.setRoomExits(pubExits);
+        
+        HashMap<RoomDirections, Room> labExits = new HashMap<>();
+        labExits.put(RoomDirections.NORTH, outside);
+        labExits.put(RoomDirections.EAST, office);        
+        lab.setRoomExits(labExits);
+        
+        HashMap<RoomDirections, Room> officeExits = new HashMap<>();        
+        officeExits.put(RoomDirections.WEST, lab);
+        office.setRoomExits(officeExits);
 
-        outside.setExits(null, theatre, lab, pub);
-        theatre.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
-
-        currentRoom = outside;
+        setCurrentRoom(outside);
     }
 
     public void play() {
         printWelcome();
-
-        boolean finished = false;
-        while (!finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
-        }
+        Command command = new Command("", "");
+        do {
+            command = getParser().getCommand();
+        }while(!processCommand(command));
+        
         System.out.println("Thank you for playing.  Good bye.");
     }
 
@@ -43,18 +62,18 @@ public class Game {
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: ");
-        if (currentRoom.northExit != null) {
+        System.out.println("You are " + getCurrentRoom().getDescription());
+        System.out.print("Exits: ");       
+        if (getCurrentRoom().getExit(RoomDirections.NORTH) != null) {
             System.out.print("north ");
         }
-        if (currentRoom.eastExit != null) {
+        if (getCurrentRoom().getExit(RoomDirections.EAST) != null) {
             System.out.print("east ");
         }
-        if (currentRoom.southExit != null) {
+        if (getCurrentRoom().getExit(RoomDirections.SOUTH) != null) {
             System.out.print("south ");
         }
-        if (currentRoom.westExit != null) {
+        if (getCurrentRoom().getExit(RoomDirections.WEST) != null) {
             System.out.print("west ");
         }
         System.out.println();
@@ -97,52 +116,74 @@ public class Game {
         String direction = command.getDirectionWord();
 
         Room nextRoom = null;
-        if (direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
-        }
-        if (direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
-        }
-        if (direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
-        }
-        if (direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
-        }
+        nextRoom = determineNextRoom(direction);
 
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        } else {
-            currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
+        if (nextRoom != null) {
+            setCurrentRoom(nextRoom);
+            System.out.println("You are " + getCurrentRoom().getDescription());
             System.out.print("Exits: ");
-            if (currentRoom.northExit != null) {
+            if (getCurrentRoom().getExit(RoomDirections.NORTH) != null) {
                 System.out.print("north ");
             }
-            if (currentRoom.eastExit != null) {
+            if (getCurrentRoom().getExit(RoomDirections.EAST) != null) {
                 System.out.print("east ");
             }
-            if (currentRoom.southExit != null) {
+            if (getCurrentRoom().getExit(RoomDirections.SOUTH) != null) {
                 System.out.print("south ");
             }
-            if (currentRoom.westExit != null) {
+            if (getCurrentRoom().getExit(RoomDirections.WEST) != null) {
                 System.out.print("west ");
             }
             System.out.println();
+            
+        } else {
+            System.out.println("There is no door!");
         }
+    }
+    
+    private Room determineNextRoom(String direction){
+        Room nextRoom = null;
+        if (direction.equals("north")) {
+            nextRoom = getCurrentRoom().getExit(RoomDirections.NORTH);
+        }
+        if (direction.equals("east")) {
+            nextRoom = getCurrentRoom().getExit(RoomDirections.EAST);
+        }
+        if (direction.equals("south")) {
+            nextRoom = getCurrentRoom().getExit(RoomDirections.SOUTH);
+        }
+        if (direction.equals("west")) {
+            nextRoom = getCurrentRoom().getExit(RoomDirections.WEST);
+        }
+        return nextRoom;
     }
 
     private boolean quit(Command command) {
         if (command.hasDirectionWord()) {
             System.out.println("Quit what?");
             return false;
-        } else {
-            return true;
         }
+        return true;        
     }
 
     public static void main(String args[]) {
         Game game = new Game();
         game.play();
+    }
+
+    public Parser getParser() {
+        return parser;
+    }
+
+    public void setParser(Parser parser) {
+        this.parser = parser;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 }

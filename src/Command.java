@@ -2,7 +2,7 @@ public class Command {
 
     private String commandWord;
     private String directionWord;
-
+    
     public Command(String commandWord, String directionWord) {
         this.commandWord = commandWord;
         this.directionWord = directionWord;
