@@ -9,11 +9,15 @@ public class CommandWords {
     }
 
     public boolean isValidCommand(String aString) {
-        for (int i = 0; i < validCommands.length; i++) {
-            if (validCommands[i].equals(aString)) {
+        for (int i = 0; i < getValidCommands().length; i++) {
+            if (getValidCommands()[i].equals(aString)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public static String[] getValidCommands() {
+        return validCommands;
     }
 }
