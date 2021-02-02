@@ -27,8 +27,10 @@ public class Parser {
                 directionWord = tokenizer.next();
             }
         }
-
-        if (getCommands().isValidCommand(commandWord)) {
+        
+        boolean isValidCommand = commands.isValidCommand(commandWord);
+        
+        if (isValidCommand) {
             return new Command(commandWord, directionWord);
         } else {
             return new Command(null, directionWord);
