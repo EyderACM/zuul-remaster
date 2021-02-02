@@ -1,3 +1,6 @@
+
+import java.util.HashMap;
+
 public class Game {
 
     private Parser parser;
@@ -16,12 +19,41 @@ public class Game {
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
-
-        outside.setExits(null, theatre, lab, pub);
-        theatre.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        
+        HashMap<RoomDirections, Room> outsideExits = new HashMap<>();
+        outsideExits.put(RoomDirections.NORTH, null);
+        outsideExits.put(RoomDirections.EAST, theatre);
+        outsideExits.put(RoomDirections.SOUTH, lab);
+        outsideExits.put(RoomDirections.WEST, pub);
+        outside.setRoomExits(outsideExits);
+        
+        HashMap<RoomDirections, Room> theatreExits = new HashMap<>();
+        theatreExits.put(RoomDirections.NORTH, null);
+        theatreExits.put(RoomDirections.EAST, null);
+        theatreExits.put(RoomDirections.SOUTH, null);
+        theatreExits.put(RoomDirections.WEST, outside);
+        theatre.setRoomExits(theatreExits);
+        
+        HashMap<RoomDirections, Room> pubExits = new HashMap<>();
+        pubExits.put(RoomDirections.NORTH, null);
+        pubExits.put(RoomDirections.EAST, outside);
+        pubExits.put(RoomDirections.SOUTH, null);
+        pubExits.put(RoomDirections.WEST, null);
+        pub.setRoomExits(pubExits);
+        
+        HashMap<RoomDirections, Room> labExits = new HashMap<>();
+        labExits.put(RoomDirections.NORTH, outside);
+        labExits.put(RoomDirections.EAST, office);
+        labExits.put(RoomDirections.SOUTH, null);
+        labExits.put(RoomDirections.WEST, null);
+        lab.setRoomExits(labExits);
+        
+        HashMap<RoomDirections, Room> officeExits = new HashMap<>();
+        officeExits.put(RoomDirections.NORTH, null);
+        officeExits.put(RoomDirections.EAST, null);
+        officeExits.put(RoomDirections.SOUTH, null);
+        officeExits.put(RoomDirections.WEST, lab);
+        office.setRoomExits(officeExits);
 
         setCurrentRoom(outside);
     }
@@ -45,16 +77,16 @@ public class Game {
         System.out.println();
         System.out.println("You are " + getCurrentRoom().getDescription());
         System.out.print("Exits: ");
-        if (getCurrentRoom().getNorthExit() != null) {
+        if (getCurrentRoom().getExit(RoomDirections.NORTH) != null) {
             System.out.print("north ");
         }
-        if (getCurrentRoom().getEastExit() != null) {
+        if (getCurrentRoom().getExit(RoomDirections.EAST) != null) {
             System.out.print("east ");
         }
-        if (getCurrentRoom().getSouthExit() != null) {
+        if (getCurrentRoom().getExit(RoomDirections.SOUTH) != null) {
             System.out.print("south ");
         }
-        if (getCurrentRoom().getWestExit() != null) {
+        if (getCurrentRoom().getExit(RoomDirections.WEST) != null) {
             System.out.print("west ");
         }
         System.out.println();
@@ -98,16 +130,16 @@ public class Game {
 
         Room nextRoom = null;
         if (direction.equals("north")) {
-            nextRoom = getCurrentRoom().getNorthExit();
+            nextRoom = getCurrentRoom().getExit(RoomDirections.NORTH);
         }
         if (direction.equals("east")) {
-            nextRoom = getCurrentRoom().getEastExit();
+            nextRoom = getCurrentRoom().getExit(RoomDirections.EAST);
         }
         if (direction.equals("south")) {
-            nextRoom = getCurrentRoom().getSouthExit();
+            nextRoom = getCurrentRoom().getExit(RoomDirections.SOUTH);
         }
         if (direction.equals("west")) {
-            nextRoom = getCurrentRoom().getWestExit();
+            nextRoom = getCurrentRoom().getExit(RoomDirections.WEST);
         }
 
         if (nextRoom == null) {
@@ -116,16 +148,16 @@ public class Game {
             setCurrentRoom(nextRoom);
             System.out.println("You are " + getCurrentRoom().getDescription());
             System.out.print("Exits: ");
-            if (getCurrentRoom().getNorthExit() != null) {
+            if (getCurrentRoom().getExit(RoomDirections.NORTH) != null) {
                 System.out.print("north ");
             }
-            if (getCurrentRoom().getEastExit() != null) {
+            if (getCurrentRoom().getExit(RoomDirections.EAST) != null) {
                 System.out.print("east ");
             }
-            if (getCurrentRoom().getSouthExit() != null) {
+            if (getCurrentRoom().getExit(RoomDirections.SOUTH) != null) {
                 System.out.print("south ");
             }
-            if (getCurrentRoom().getWestExit() != null) {
+            if (getCurrentRoom().getExit(RoomDirections.WEST) != null) {
                 System.out.print("west ");
             }
             System.out.println();
