@@ -94,12 +94,12 @@ public class Game {
 
     private void goRoom(Command command) 
     {
-        if(!command.hasSecondWord()) {
+        if(!command.hasDirectionWord()) {
             System.out.println("Go where?");
             return;
         }
 
-        String direction = command.getSecondWord();
+        String direction = command.getDirectionWord();
 
         Room nextRoom = null;
         if(direction.equals("north")) {
@@ -140,7 +140,7 @@ public class Game {
 
     private boolean quit(Command command) 
     {
-        if(command.hasSecondWord()) {
+        if(command.hasDirectionWord()) {
             System.out.println("Quit what?");
             return false;
         }

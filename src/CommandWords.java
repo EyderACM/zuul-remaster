@@ -8,7 +8,7 @@ public class CommandWords {
         // TODO: Complete section
     }
 
-    public boolean isCommand(String aString) {
+    public boolean isValidCommand(String aString) {
         for (int i = 0; i < validCommands.length; i++) {
             if (validCommands[i].equals(aString)) {
                 return true;
