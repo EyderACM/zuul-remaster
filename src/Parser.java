@@ -18,7 +18,7 @@ public class Parser {
 
         System.out.print("> ");
 
-        inputLine = reader.nextLine();
+        inputLine = getReader().nextLine();
 
         Scanner tokenizer = new Scanner(inputLine);
         if (tokenizer.hasNext()) {
@@ -28,10 +28,18 @@ public class Parser {
             }
         }
 
-        if (commands.isValidCommand(commandWord)) {
+        if (getCommands().isValidCommand(commandWord)) {
             return new Command(commandWord, directionWord);
         } else {
             return new Command(null, directionWord);
         }
+    }
+
+    public CommandWords getCommands() {
+        return commands;
+    }
+
+    public Scanner getReader() {
+        return reader;
     }
 }

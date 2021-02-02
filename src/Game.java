@@ -23,7 +23,7 @@ public class Game {
         lab.setExits(outside, office, null, null);
         office.setExits(null, null, null, lab);
 
-        currentRoom = outside;
+        setCurrentRoom(outside);
     }
 
     public void play() {
@@ -31,7 +31,7 @@ public class Game {
 
         boolean finished = false;
         while (!finished) {
-            Command command = parser.getCommand();
+            Command command = getParser().getCommand();
             finished = processCommand(command);
         }
         System.out.println("Thank you for playing.  Good bye.");
@@ -43,18 +43,18 @@ public class Game {
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
+        System.out.println("You are " + getCurrentRoom().getDescription());
         System.out.print("Exits: ");
-        if (currentRoom.northExit != null) {
+        if (getCurrentRoom().getNorthExit() != null) {
             System.out.print("north ");
         }
-        if (currentRoom.eastExit != null) {
+        if (getCurrentRoom().getEastExit() != null) {
             System.out.print("east ");
         }
-        if (currentRoom.southExit != null) {
+        if (getCurrentRoom().getSouthExit() != null) {
             System.out.print("south ");
         }
-        if (currentRoom.westExit != null) {
+        if (getCurrentRoom().getWestExit() != null) {
             System.out.print("west ");
         }
         System.out.println();
@@ -98,34 +98,34 @@ public class Game {
 
         Room nextRoom = null;
         if (direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
+            nextRoom = getCurrentRoom().getNorthExit();
         }
         if (direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
+            nextRoom = getCurrentRoom().getEastExit();
         }
         if (direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
+            nextRoom = getCurrentRoom().getSouthExit();
         }
         if (direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
+            nextRoom = getCurrentRoom().getWestExit();
         }
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
         } else {
-            currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
+            setCurrentRoom(nextRoom);
+            System.out.println("You are " + getCurrentRoom().getDescription());
             System.out.print("Exits: ");
-            if (currentRoom.northExit != null) {
+            if (getCurrentRoom().getNorthExit() != null) {
                 System.out.print("north ");
             }
-            if (currentRoom.eastExit != null) {
+            if (getCurrentRoom().getEastExit() != null) {
                 System.out.print("east ");
             }
-            if (currentRoom.southExit != null) {
+            if (getCurrentRoom().getSouthExit() != null) {
                 System.out.print("south ");
             }
-            if (currentRoom.westExit != null) {
+            if (getCurrentRoom().getWestExit() != null) {
                 System.out.print("west ");
             }
             System.out.println();
@@ -144,5 +144,21 @@ public class Game {
     public static void main(String args[]) {
         Game game = new Game();
         game.play();
+    }
+
+    public Parser getParser() {
+        return parser;
+    }
+
+    public void setParser(Parser parser) {
+        this.parser = parser;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 }
