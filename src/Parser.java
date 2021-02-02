@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -14,8 +13,8 @@ public class Parser {
 
     public Command getCommand() {
         String inputLine;
-        String word1 = null;
-        String word2 = null;
+        String commandWord = null;
+        String directionWord = null;
 
         System.out.print("> ");
 
@@ -23,16 +22,16 @@ public class Parser {
 
         Scanner tokenizer = new Scanner(inputLine);
         if (tokenizer.hasNext()) {
-            word1 = tokenizer.next();
+            commandWord = tokenizer.next();
             if (tokenizer.hasNext()) {
-                word2 = tokenizer.next();
+                directionWord = tokenizer.next();
             }
         }
 
-        if (commands.isCommand(word1)) {
-            return new Command(word1, word2);
+        if (commands.isValidCommand(commandWord)) {
+            return new Command(commandWord, directionWord);
         } else {
-            return new Command(null, word2);
+            return new Command(null, directionWord);
         }
     }
 }

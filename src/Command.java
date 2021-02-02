@@ -1,36 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author rafa_
- */
 public class Command {
 
     private String commandWord;
-    private String secondWord;
+    private String directionWord;
 
-    public Command(String firstWord, String secondWord) {
-        commandWord = firstWord;
-        this.secondWord = secondWord;
+    public Command(String commandWord, String directionWord) {
+        this.commandWord = commandWord;
+        this.directionWord = directionWord;
     }
 
     public String getCommandWord() {
         return commandWord;
     }
 
-    public String getSecondWord() {
-        return secondWord;
+    public String getDirectionWord() {
+        return directionWord;
     }
 
     public boolean isUnknown() {
         return (commandWord == null);
     }
 
-    public boolean hasSecondWord() {
-        return (secondWord != null);
+    public boolean hasDirectionWord() {
+        return (directionWord != null);
     }
 }
