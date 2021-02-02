@@ -20,38 +20,26 @@ public class Game {
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
         
-        HashMap<RoomDirections, Room> outsideExits = new HashMap<>();
-        outsideExits.put(RoomDirections.NORTH, null);
+        HashMap<RoomDirections, Room> outsideExits = new HashMap<>();       
         outsideExits.put(RoomDirections.EAST, theatre);
         outsideExits.put(RoomDirections.SOUTH, lab);
         outsideExits.put(RoomDirections.WEST, pub);
         outside.setRoomExits(outsideExits);
         
-        HashMap<RoomDirections, Room> theatreExits = new HashMap<>();
-        theatreExits.put(RoomDirections.NORTH, null);
-        theatreExits.put(RoomDirections.EAST, null);
-        theatreExits.put(RoomDirections.SOUTH, null);
+        HashMap<RoomDirections, Room> theatreExits = new HashMap<>();        
         theatreExits.put(RoomDirections.WEST, outside);
         theatre.setRoomExits(theatreExits);
         
-        HashMap<RoomDirections, Room> pubExits = new HashMap<>();
-        pubExits.put(RoomDirections.NORTH, null);
-        pubExits.put(RoomDirections.EAST, outside);
-        pubExits.put(RoomDirections.SOUTH, null);
-        pubExits.put(RoomDirections.WEST, null);
+        HashMap<RoomDirections, Room> pubExits = new HashMap<>();        
+        pubExits.put(RoomDirections.EAST, outside);        
         pub.setRoomExits(pubExits);
         
         HashMap<RoomDirections, Room> labExits = new HashMap<>();
         labExits.put(RoomDirections.NORTH, outside);
-        labExits.put(RoomDirections.EAST, office);
-        labExits.put(RoomDirections.SOUTH, null);
-        labExits.put(RoomDirections.WEST, null);
+        labExits.put(RoomDirections.EAST, office);        
         lab.setRoomExits(labExits);
         
-        HashMap<RoomDirections, Room> officeExits = new HashMap<>();
-        officeExits.put(RoomDirections.NORTH, null);
-        officeExits.put(RoomDirections.EAST, null);
-        officeExits.put(RoomDirections.SOUTH, null);
+        HashMap<RoomDirections, Room> officeExits = new HashMap<>();        
         officeExits.put(RoomDirections.WEST, lab);
         office.setRoomExits(officeExits);
 
@@ -75,7 +63,7 @@ public class Game {
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         System.out.println("You are " + getCurrentRoom().getDescription());
-        System.out.print("Exits: ");
+        System.out.print("Exits: ");       
         if (getCurrentRoom().getExit(RoomDirections.NORTH) != null) {
             System.out.print("north ");
         }
@@ -167,9 +155,8 @@ public class Game {
         if (command.hasDirectionWord()) {
             System.out.println("Quit what?");
             return false;
-        } else {
-            return true;
         }
+        return true;        
     }
 
     public static void main(String args[]) {
