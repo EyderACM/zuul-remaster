@@ -18,7 +18,7 @@ public class Parser {
 
         System.out.print("> ");
 
-        inputLine = reader.nextLine();
+        inputLine = getReader().nextLine();
 
         Scanner tokenizer = new Scanner(inputLine);
         if (tokenizer.hasNext()) {
@@ -35,5 +35,13 @@ public class Parser {
         } else {
             return new Command(null, directionWord);
         }
+    }
+
+    public CommandWords getCommands() {
+        return commands;
+    }
+
+    public Scanner getReader() {
+        return reader;
     }
 }

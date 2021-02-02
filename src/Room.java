@@ -1,31 +1,29 @@
+
+import java.util.HashMap;
+
 public class Room {
 
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
+    private String description;
+    private RoomExits roomExits = new RoomExits();
 
     public Room(String description) {
         this.description = description;
     }
 
-    public void setExits(Room north, Room east, Room south, Room west) {
-        if (north != null) {
-            northExit = north;
-        }
-        if (east != null) {
-            eastExit = east;
-        }
-        if (south != null) {
-            southExit = south;
-        }
-        if (west != null) {
-            westExit = west;
-        }
+    public void setRoomExits(HashMap<RoomDirections, Room> roomExits) {
+        this.roomExits.setRooms(roomExits);
     }
 
     public String getDescription() {
         return description;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Room getExit(RoomDirections direction) {
+        return roomExits.getRooms().get(direction);
+    }
+    
 }
