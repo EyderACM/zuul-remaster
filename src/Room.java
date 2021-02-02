@@ -1,4 +1,3 @@
-
 public class Room {
 
     public String description;
@@ -29,5 +28,4 @@ public class Room {
     public String getDescription() {
         return description;
     }
-
 }
