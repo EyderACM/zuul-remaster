@@ -116,22 +116,9 @@ public class Game {
         String direction = command.getDirectionWord();
 
         Room nextRoom = null;
-        if (direction.equals("north")) {
-            nextRoom = getCurrentRoom().getExit(RoomDirections.NORTH);
-        }
-        if (direction.equals("east")) {
-            nextRoom = getCurrentRoom().getExit(RoomDirections.EAST);
-        }
-        if (direction.equals("south")) {
-            nextRoom = getCurrentRoom().getExit(RoomDirections.SOUTH);
-        }
-        if (direction.equals("west")) {
-            nextRoom = getCurrentRoom().getExit(RoomDirections.WEST);
-        }
+        nextRoom = determineNextRoom(direction);
 
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        } else {
+        if (nextRoom != null) {
             setCurrentRoom(nextRoom);
             System.out.println("You are " + getCurrentRoom().getDescription());
             System.out.print("Exits: ");
@@ -148,7 +135,27 @@ public class Game {
                 System.out.print("west ");
             }
             System.out.println();
+            
+        } else {
+            System.out.println("There is no door!");
         }
+    }
+    
+    private Room determineNextRoom(String direction){
+        Room nextRoom = null;
+        if (direction.equals("north")) {
+            nextRoom = getCurrentRoom().getExit(RoomDirections.NORTH);
+        }
+        if (direction.equals("east")) {
+            nextRoom = getCurrentRoom().getExit(RoomDirections.EAST);
+        }
+        if (direction.equals("south")) {
+            nextRoom = getCurrentRoom().getExit(RoomDirections.SOUTH);
+        }
+        if (direction.equals("west")) {
+            nextRoom = getCurrentRoom().getExit(RoomDirections.WEST);
+        }
+        return nextRoom;
     }
 
     private boolean quit(Command command) {
