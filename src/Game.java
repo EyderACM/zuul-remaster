@@ -60,12 +60,11 @@ public class Game {
 
     public void play() {
         printWelcome();
-
-        boolean finished = false;
-        while (!finished) {
-            Command command = getParser().getCommand();
-            finished = processCommand(command);
-        }
+        Command command = new Command("", "");
+        do {
+            command = getParser().getCommand();
+        }while(!processCommand(command));
+        
         System.out.println("Thank you for playing.  Good bye.");
     }
 
